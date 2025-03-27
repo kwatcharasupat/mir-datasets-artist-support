@@ -1,0 +1,9 @@
+artist:
+  display_name: Steven Clark
+  artist_link: https://stevenaclark.bandcamp.com/
+tracks:
+  - track_name: "Bounty"
+    track_link: "https://stevenaclark.bandcamp.com/track/bounty"
+    datasets:
+      - MUSDB18
+      - MedleyDB
