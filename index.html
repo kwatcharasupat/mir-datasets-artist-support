@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artist Support</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9fafb;
+        color: #343a40;
+        line-height: 1.6;
+      }
+      .navbar {
+        background-color: #4c1d95;
+        color: white;
+        padding: 1rem 1.5rem;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .navbar a {
+        color: white;
+        text-decoration: none;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+      .navbar a:hover {
+        color: #d946ef;
+      }
+      .container {
+        display: flex;
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1.5rem;
+        gap: 2rem;
+      }
+      .sidebar {
+        width: 250px;
+        padding-left: 1.5rem;
+        border-left: 1px solid #e5e7eb;
+      }
+      .sidebar h2 {
+        margin-top: 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #4c1d95;
+        margin-bottom: 1rem;
+      }
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .sidebar li {
+        margin-bottom: 0.75rem;
+        font-size: 1rem;
+        color: #6b7280;
+      }
+      .sidebar li:hover {
+        color: #d946ef;
+      }
+
+      .main-content {
+        flex-grow: 1;
+        padding-right: 1.5rem;
+      }
+      .filter-controls {
+        margin-bottom: 1.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+      }
+      .filter-controls label {
+        font-weight: 500;
+        color: #4f46e5;
+      }
+      .filter-controls select, .filter-controls button {
+        padding: 0.75rem;
+        border-radius: 0.375rem;
+        border: 1px solid #d1d5db;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+      }
+      .filter-controls select:focus {
+        outline: none;
+        border-color: #d946ef;
+        box-shadow: 0 0 0 2px rgba(217, 70, 239, 0.2);
+      }
+      .filter-controls button {
+        background-color: #4f46e5;
+        color: white;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+      .filter-controls button:hover {
+        background-color: #d946ef;
+        transform: translateY(-2px);
+      }
+      #artist-frame-container {
+        border: 1px solid #e5e7eb;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border-radius: 0.5rem;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+      #artist-frame-container h2{
+        color: #6366f1;
+      }
+      .navigation-arrows {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+      }
+      .navigation-arrows button {
+        padding: 0.75rem 1.5rem;
+        cursor: pointer;
+        border-radius: 0.375rem;
+        border: none;
+        background-color: #4f46e5;
+        color: white;
+        font-weight: 500;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+      .navigation-arrows button:hover {
+        background-color: #d946ef;
+        transform: translateY(-2px);
+      }
+
+      .track-list {
+        list-style: none;
+        padding: 0;
+        margin-top: 1rem;
+      }
+      .track-item {
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+        color: #4a5568;
+      }
+      .track-item a {
+        color: #0078d7;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      .track-item a:hover {
+        color: #d946ef;
+      }
+      .purchase-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.5rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: #f59e0b;
+        color: white;
+        font-size: 0.8rem;
+        transition: background-color 0.3s ease;
+      }
+      .purchase-icon:hover {
+        background-color: #ed8936;
+      }
+      footer {
+        background-color: #e2e8f0;
+        color: #4a5568;
+        text-align: center;
+        padding: 1rem;
+        margin-top: 2rem;
+        border-top: 1px solid #e5e7eb;
+      }
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+          padding: 1rem;
+        }
+        .sidebar {
+          width: 100%;
+          border-left: none;
+          padding-left: 0;
+          margin-bottom: 2rem;
+        }
+        .main-content {
+          padding-right: 0;
+        }
+        .filter-controls {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+      }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#">Home</a>
+        <a href="#">Artists</a>
+        <a href="#">About</a>
+    </nav>
+
+    <div class="container">
+        <main class="main-content">
+            <div class="filter-controls">
+                <label for="dataset-filter">Dataset:</label>
+                <select id="dataset-filter">
+                    <option value="">All</option>
+                    </select>
+
+                <label for="purchaseable-filter">Purchaseable:</label>
+                <select id="purchaseable-filter">
+                    <option value="">All</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+
+                <label for="purchase-option-filter">Purchase Option:</label>
+                <select id="purchase-option-filter">
+                    <option value="">All</option>
+                    <option value="bandcamp">Bandcamp</option>
+                    </select>
+
+                <button id="randomize-button">Randomize</button>
+            </div>
+
+            <div id="artist-frame-container">
+                </div>
+
+            <div class="navigation-arrows">
+                <button id="prev-artist">Previous</button>
+                <button id="next-artist">Next</button>
+            </div>
+        </main>
+        <aside class="sidebar">
+            <h2>Artists Without Purchaseable Tracks</h2>
+            <ul id="sidebar-artists">
+                </ul>
+        </aside>
+    </div>
+
+    <footer>
+        &copy; 2025 Artist Support
+    </footer>
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const artistFrameContainer = document.getElementById('artist-frame-container');
+    const datasetFilter = document.getElementById('dataset-filter');
+    const purchaseableFilter = document.getElementById('purchaseable-filter');
+    const purchaseOptionFilter = document.getElementById('purchase-option-filter');
+    const randomizeButton = document.getElementById('randomize-button');
+    const prevArtistButton = document.getElementById('prev-artist');
+    const nextArtistButton = document.getElementById('next-artist');
+    const sidebarArtistsList = document.getElementById('sidebar-artists');
+
+    let artistsData = {};
+    let currentArtistIndex = 0;
+    let filteredArtists = [];
+    const artistNames = ['stevenaclark', 'tameimpala']; // Add artist folder names
+
+    // Function to fetch and process artist data
+    async function fetchArtistsData() {
+        for (const artistName of artistNames) {
+            try {
+                // Construct the URL relative to the current page.
+                const response = await fetch(`./src/artists/${artistName}/tracklist_processed.yaml`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.text();
+                    });
+
+                const data = jsyaml.load(response);
+                artistsData[artistName] = data;
+            } catch (error) {
+                console.error(`Error processing data for ${artistName}:`, error);
+                // Handle the error appropriately, e.g., display a message to the user
+                artistFrameContainer.innerHTML += `<p>Failed to load data for ${artistName}.</p>`;
+            }        }
+        populateFilters();
+        populateSidebar();
+        filterArtists();
+        displayCurrentArtistFrame();
+    }
+
+
+
+    function populateFilters() {
+        const datasets = new Set();
+        for (const artistData of Object.values(artistsData)) {
+            artistData.tracks.forEach(track => {
+                if (track.datasets) {
+                    track.datasets.forEach(dataset => datasets.add(dataset.trim()));
+                }
+            });
+        }
+        datasets.forEach(dataset => {
+            const option = document.createElement('option');
+            option.value = dataset;
+            option.textContent = dataset;
+            datasetFilter.appendChild(option);
+        });
+        //Add default options
+        if (!datasetFilter.querySelector('option[value="MUSDB18"]')) {
+            const option = document.createElement('option');
+            option.value = "MUSDB18";
+            option.textContent = "MUSDB18";
+            datasetFilter.appendChild(option);
+        }
+        if (!datasetFilter.querySelector('option[value="MedleyDB"]')) {
+            const option = document.createElement('option');
+            option.value = "MedleyDB";
+            option.textContent = "MedleyDB";
+            datasetFilter.appendChild(option);
+        }
+    }
+
+    function populateSidebar() {
+        for (const artistName in artistsData) {
+            const hasPurchaseableTrack = artistsData[artistName].tracks.some(track => track.purchaseable === 'track_true' || track.purchaseable === 'album_true');
+            if (!hasPurchaseableTrack) {
+                const li = document.createElement('li');
+                li.textContent = artistsData[artistName].artist.display_name;
+                sidebarArtistsList.appendChild(li);
+            }
+        }
+    }
+
+    function filterArtists() {
+        console.log("filterArtists called");
+        console.log("datasetFilter.value:", datasetFilter.value);
+        console.log("purchaseableFilter.value:", purchaseableFilter.value);
+        console.log("purchaseOptionFilter.value:", purchaseOptionFilter.value);
+
+        filteredArtists = Object.keys(artistsData).filter(artistName => {
+            const artistData = artistsData[artistName];
+            console.log("Checking artist:", artistName);
+            return artistData.tracks.some(track => {
+                const datasetMatch = !datasetFilter.value || (track.datasets && track.datasets.includes(datasetFilter.value));
+                const purchaseableMatch = !purchaseableFilter.value || (purchaseableFilter.value === 'true' && (track.purchaseable === 'track_true' || track.purchaseable === 'album_true')) || (purchaseableFilter.value === 'false' && track.purchaseable !== 'track_true' && track.purchaseable !== 'album_true');
+                const purchaseOptionMatch = !purchaseOptionFilter.value || (purchaseOptionFilter.value === 'bandcamp' && track.bandcamp_album_id);
+                console.log(`Track: ${track.track_name}, datasetMatch: ${datasetMatch}, purchaseableMatch: ${purchaseableMatch}, purchaseOptionMatch: ${purchaseOptionMatch}`);
+                return datasetMatch && purchaseableMatch && purchaseOptionMatch;
+            });
+        });
+        currentArtistIndex = 0;
+        if(filteredArtists.length > 0){
+            displayCurrentArtistFrame();
+        }
+        else{
+            artistFrameContainer.innerHTML = "No artists match the current filter"
+        }
+    }
+
+    function displayCurrentArtistFrame() {
+        artistFrameContainer.innerHTML = '';
+        if (filteredArtists.length === 0) {
+            artistFrameContainer.textContent = 'No artists match the current filters.';
+            return;
+        }
+
+        const currentArtistName = filteredArtists[currentArtistIndex];
+        const artistData = artistsData[currentArtistName];
+
+        const artistDiv = document.createElement('div');
+        artistDiv.innerHTML = `<h2>${artistData.artist.display_name}</h2>`;
+
+        // Embed iframe
+        const randomAlbum = artistData.albums[Math.floor(Math.random() * artistData.albums.length)];
+        if (randomAlbum && randomAlbum.bandcamp_album_id) {
+            const iframeWidth = 300;
+            const iframeHeight = 300;
+            const iframe = document.createElement('iframe');
+            iframe.style.border = '0';
+            iframe.style.width = `${iframeWidth}px`;
+            iframe.style.height = `${iframeHeight}px`;
+            iframe.src = `https://bandcamp.com/EmbeddedPlayer/album=${randomAlbum.bandcamp_album_id}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/`;
+            iframe.seamless = true;
+            const bandcampLink = document.createElement('a');
+            bandcampLink.href = `https://stevenaclark.bandcamp.com/album/${randomAlbum.albumName.toLowerCase().replace(/ /g, '-')}`;
+            bandcampLink.textContent = `${randomAlbum.albumName} by ${artistData.artist.display_name}`;
+            iframe.appendChild(bandcampLink);
+            artistDiv.appendChild(iframe);
+        } else {
+            artistDiv.innerHTML += '<p>[Placeholder for other iframes]</p>';
+        }
+
+        // Track list
+        const trackListUl = document.createElement('ul');
+        trackListUl.classList.add('track-list');
+        artistData.tracks.forEach(track => {
+            const trackLi = document.createElement('li');
+            trackLi.classList.add('track-item');
+
+            if (track.purchaseable === 'track_true') {
+                const purchaseIcon = document.createElement('span');
+                purchaseIcon.classList.add('purchase-icon');
+                purchaseIcon.textContent = '$';
+                purchaseIcon.title = 'Purchase Track';
+                purchaseIcon.addEventListener('click', () => {
+                    window.location.href = track.track_link;
+                });
+                trackLi.appendChild(purchaseIcon);
+            } else if (track.purchaseable === 'album_true') {
+                const purchaseIcon = document.createElement('span');
+                purchaseIcon.classList.add('purchase-icon');
+                purchaseIcon.textContent = 'A';
+                purchaseIcon.title = 'Purchase Album';
+                trackLi.appendChild(purchaseIcon);
+            }
+
+            const trackNameSpan = document.createElement('span');
+            trackNameSpan.textContent = track.track_name;
+            if(track.track_link){
+              const trackLinkA = document.createElement('a');
+              trackLinkA.href = track.track_link;
+              trackLinkA.textContent = track.track_name;
+              trackNameSpan.innerHTML = '';
+              trackNameSpan.appendChild(trackLinkA)
+            }
+            trackLi.appendChild(trackNameSpan);
+
+
+            if (track.datasets && track.datasets.length > 0) {
+                const datasetsSpan = document.createElement('span');
+                datasetsSpan.textContent = ` (${track.datasets.join(', ')})`;
+                trackLi.appendChild(datasetsSpan);
+            }
+
+            trackListUl.appendChild(trackLi);
+        });
+        artistDiv.appendChild(trackListUl);
+        artistFrameContainer.appendChild(artistDiv);
+    }
+
+    datasetFilter.addEventListener('change', filterArtists);
+    purchaseableFilter.addEventListener('change', filterArtists);
+    purchaseOptionFilter.addEventListener('change', filterArtists);
+
+    randomizeButton.addEventListener('click', () => {
+        if (filteredArtists.length > 0) {
+            currentArtistIndex = Math.floor(Math.random() * filteredArtists.length);
+            displayCurrentArtistFrame();
+        }
+    });
+
+    prevArtistButton.addEventListener('click', () => {
+        if (filteredArtists.length > 0) {
+            currentArtistIndex = (currentArtistIndex - 1 + filteredArtists.length) % filteredArtists.length;
+            displayCurrentArtistFrame();
+        }
+    });
+
+    nextArtistButton.addEventListener('click', () => {
+        if (filteredArtists.length > 0) {
+            currentArtistIndex = (currentArtistIndex + 1) % filteredArtists.length;
+            displayCurrentArtistFrame();
+        }
+    });
+
+    // Initial data fetch
+    fetchArtistsData();
+});
+</script>
+</html
