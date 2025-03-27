@@ -1,0 +1,36 @@
+name: Process Artist Track Data
+
+on:
+  push:
+    branches:
+      - main  # Or your main branch
+
+jobs:
+  process_data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'  # Or a suitable version
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pyyaml
+
+      - name: Run data processing script
+        run: |
+          python process_data.py  # Ensure the python script is at the root of the repo
+      
+      - name: Commit and push changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: 'processed_tracklist.yaml' #Adjust the name
+          message: 'Process track data'
+          branch: main # Or the branch you are working on
+
