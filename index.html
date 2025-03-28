@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,122 +10,144 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
-    <style>
-      body {
+
+</head>
+<style>
+    body {
         font-family: 'Inter', sans-serif;
         margin: 0;
         padding: 0;
         background-color: #f9fafb;
         color: #343a40;
         line-height: 1.6;
-      }
-      .navbar {
+    }
+
+    .navbar {
         background-color: #4c1d95;
         color: white;
         padding: 1rem 1.5rem;
         text-align: center;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-      .navbar a {
+    }
+
+    .navbar a {
         color: white;
         text-decoration: none;
         padding: 0.75rem 1.5rem;
         font-weight: 500;
         transition: color 0.3s ease;
-      }
-      .navbar a:hover {
+    }
+
+    .navbar a:hover {
         color: #d946ef;
-      }
-      .container {
+    }
+
+    .container {
         display: flex;
         max-width: 1200px;
         margin: 2rem auto;
         padding: 0 1.5rem;
         gap: 2rem;
-      }
-      .sidebar {
+    }
+
+    .sidebar {
         width: 250px;
         padding-left: 1.5rem;
         border-left: 1px solid #e5e7eb;
-      }
-      .sidebar h2 {
+    }
+
+    .sidebar h2 {
         margin-top: 0;
         font-size: 1.5rem;
         font-weight: 600;
         color: #4c1d95;
         margin-bottom: 1rem;
-      }
-      .sidebar ul {
+    }
+
+    .sidebar ul {
         list-style: none;
         padding: 0;
         margin: 0;
-      }
-      .sidebar li {
+    }
+
+    .sidebar li {
         margin-bottom: 0.75rem;
         font-size: 1rem;
         color: #6b7280;
-      }
-      .sidebar li:hover {
-        color: #d946ef;
-      }
+    }
 
-      .main-content {
+    .sidebar li:hover {
+        color: #d946ef;
+    }
+
+    .main-content {
         flex-grow: 1;
         padding-right: 1.5rem;
-      }
-      .filter-controls {
+    }
+
+    .filter-controls {
         margin-bottom: 1.5rem;
         display: flex;
         flex-wrap: wrap;
         gap: 1rem;
         align-items: center;
-      }
-      .filter-controls label {
+    }
+
+    .filter-controls label {
         font-weight: 500;
         color: #4f46e5;
-      }
-      .filter-controls select, .filter-controls button {
+    }
+
+    .filter-controls select,
+    .filter-controls button {
         padding: 0.75rem;
         border-radius: 0.375rem;
         border: 1px solid #d1d5db;
         font-size: 1rem;
         transition: border-color 0.3s ease;
-      }
-      .filter-controls select:focus {
+    }
+
+    .filter-controls select:focus {
         outline: none;
         border-color: #d946ef;
         box-shadow: 0 0 0 2px rgba(217, 70, 239, 0.2);
-      }
-      .filter-controls button {
+    }
+
+    .filter-controls button {
         background-color: #4f46e5;
         color: white;
         cursor: pointer;
         font-weight: 500;
         transition: background-color 0.3s ease, transform 0.2s ease;
-      }
-      .filter-controls button:hover {
+    }
+
+    .filter-controls button:hover {
         background-color: #d946ef;
         transform: translateY(-2px);
-      }
-      #artist-frame-container {
+    }
+
+    #artist-frame-container {
         border: 1px solid #e5e7eb;
         padding: 1.5rem;
         margin-bottom: 1.5rem;
         border-radius: 0.5rem;
         background-color: white;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-      }
-      #artist-frame-container h2{
+    }
+
+    #artist-frame-container h2 {
         color: #6366f1;
-      }
-      .navigation-arrows {
+    }
+
+    .navigation-arrows {
         text-align: center;
         margin-bottom: 1.5rem;
         display: flex;
         justify-content: center;
         gap: 1rem;
-      }
-      .navigation-arrows button {
+    }
+
+    .navigation-arrows button {
         padding: 0.75rem 1.5rem;
         cursor: pointer;
         border-radius: 0.375rem;
@@ -133,33 +156,42 @@
         color: white;
         font-weight: 500;
         transition: background-color 0.3s ease, transform 0.2s ease;
-      }
-      .navigation-arrows button:hover {
+    }
+
+    .navigation-arrows button:hover {
         background-color: #d946ef;
         transform: translateY(-2px);
-      }
+    }
 
-      .track-list {
+    .track-list {
         list-style: none;
         padding: 0;
         margin-top: 1rem;
-      }
-      .track-item {
-        margin-bottom: 0.75rem;
+    }
+
+    .track-item {
+        margin-bottom: 1.25rem;
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        align-items: flex-start;
         font-size: 1rem;
         color: #4a5568;
-      }
-      .track-item a {
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .track-item a {
         color: #0078d7;
         text-decoration: none;
         transition: color 0.3s ease;
-      }
-      .track-item a:hover {
+        font-weight: 500;
+    }
+
+    .track-item a:hover {
         color: #d946ef;
-      }
-      .purchase-icon {
+    }
+
+    .purchase-icon {
         width: 20px;
         height: 20px;
         margin-right: 0.5rem;
@@ -172,40 +204,133 @@
         color: white;
         font-size: 0.8rem;
         transition: background-color 0.3s ease;
-      }
-      .purchase-icon:hover {
+    }
+
+    .purchase-icon:hover {
         background-color: #ed8936;
-      }
-      footer {
+    }
+
+    .album-info {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-top: 0.25rem;
+    }
+
+    .price-info {
+        font-size: 0.875rem;
+        color: #4f46e5;
+        margin-top: 0.25rem;
+        font-weight: 500;
+    }
+
+    #iframe-container {
+        flex: 0 0 50%;
+        padding-right: 1rem;
+        box-sizing: border-box;
+    }
+
+    #tracklist-container {
+        flex: 1;
+        padding-left: 1rem;
+        box-sizing: border-box;
+    }
+
+    footer {
         background-color: #e2e8f0;
         color: #4a5568;
         text-align: center;
         padding: 1rem;
         margin-top: 2rem;
         border-top: 1px solid #e5e7eb;
-      }
-      @media (max-width: 768px) {
+    }
+
+    @media (max-width: 768px) {
         .container {
-          flex-direction: column;
-          padding: 1rem;
+            flex-direction: column;
+            padding: 1rem;
         }
+
         .sidebar {
-          width: 100%;
-          border-left: none;
-          padding-left: 0;
-          margin-bottom: 2rem;
+            width: 100%;
+            border-left: none;
+            padding-left: 0;
+            margin-bottom: 2rem;
         }
+
         .main-content {
-          padding-right: 0;
+            padding-right: 0;
         }
+
         .filter-controls {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 1rem;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
         }
-      }
-    </style>
-</head>
+
+        #artist-track-container {
+            flex-direction: column;
+        }
+
+        #iframe-container {
+            padding-right: 0;
+            padding-bottom: 1rem;
+            flex: 1 0 100%;
+        }
+
+        #tracklist-container {
+            padding-left: 0;
+            flex: 1 0 100%;
+        }
+    }
+
+    .dataset-tag {
+        display: inline-flex;
+        padding: 0.25rem 0.5rem;
+        margin-left: 0.0rem;
+        background-color: #a7f3d0;
+        color: #065f46;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border: none;
+        margin-bottom: 0.25rem;
+    }
+
+    .dataset-tag:hover {
+        background-color: #34d399;
+    }
+
+    .track-item {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        font-size: 1rem;
+        color: #4a5568;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .track-item a {
+        color: #0078d7;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        font-weight: 500;
+    }
+
+    .track-item a:hover {
+        color: #d946ef;
+    }
+
+    .track-datasets {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.25rem;
+    }
+</style>
+
 <body>
     <nav class="navbar">
         <a href="#">Home</a>
@@ -219,7 +344,7 @@
                 <label for="dataset-filter">Dataset:</label>
                 <select id="dataset-filter">
                     <option value="">All</option>
-                    </select>
+                </select>
 
                 <label for="purchaseable-filter">Purchaseable:</label>
                 <select id="purchaseable-filter">
@@ -232,13 +357,19 @@
                 <select id="purchase-option-filter">
                     <option value="">All</option>
                     <option value="bandcamp">Bandcamp</option>
-                    </select>
+                </select>
 
                 <button id="randomize-button">Randomize</button>
             </div>
 
             <div id="artist-frame-container">
+            </div>
+            <div id="artist-track-container" style="display: flex; width: 100%;">
+                <div id="iframe-container">
                 </div>
+                <div id="tracklist-container">
+                </div>
+            </div>
 
             <div class="navigation-arrows">
                 <button id="prev-artist">Previous</button>
@@ -247,8 +378,7 @@
         </main>
         <aside class="sidebar">
             <h2>Artists Without Purchaseable Tracks</h2>
-            <ul id="sidebar-artists">
-                </ul>
+
         </aside>
     </div>
 
@@ -257,291 +387,701 @@
     </footer>
 
     <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const artistFrameContainer = document.getElementById('artist-frame-container');
-    const datasetFilter = document.getElementById('dataset-filter');
-    const purchaseableFilter = document.getElementById('purchaseable-filter');
-    const purchaseOptionFilter = document.getElementById('purchase-option-filter');
-    const randomizeButton = document.getElementById('randomize-button');
-    const prevArtistButton = document.getElementById('prev-artist');
-    const nextArtistButton = document.getElementById('next-artist');
-    const sidebarArtistsList = document.getElementById('sidebar-artists');
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOMContentLoaded event fired");
+            const artistFrameContainer = document.getElementById('artist-frame-container');
+            const datasetFilter = document.getElementById('dataset-filter');
+            const purchaseableFilter = document.getElementById('purchaseable-filter');
+            const purchaseOptionFilter = document.getElementById('purchase-option-filter');
+            const randomizeButton = document.getElementById('randomize-button');
+            const prevArtistButton = document.getElementById('prev-artist');
+            const nextArtistButton = document.getElementById('next-artist');
+            const sidebarArtistsList = document.getElementById('sidebar-artists');
+            const iframeContainer = document.getElementById('iframe-container');
+            const tracklistContainer = document.getElementById('tracklist-container');
 
-    // Hardcoded artist data for testing
-    const artistsData = {
-      'stevenaclark': {
-        'artist': {
-          'display_name': 'Steven A Clark',
-          'bandcamp_subdomain': 'stevenaclark',
-        },
-        'tracks': [
-          {
-            'track_name': 'Bounty',
-            'track_link': 'https://stevenaclark.bandcamp.com/track/bounty',
-            'datasets': ["MUSDB18"],
-          },
-        ],
-        'albums': [
-            {
-                'albumName': 'The Lonely Roller',
-                'bandcamp_album_id': '256124896',
-            },
-        ],
-      },
-    };
+            // Hardcoded artist data for testing
+            const artistsData = {
+                'stevenaclark': {
+                    'artist': {
+                        'display_name': 'Steven A Clark',
+                        'bandcamp_subdomain': 'stevenaclark',
+                    },
+                    'tracks': [
+                        {
+                            'track_name': 'Bounty',
+                            'track_link': 'https://stevenaclark.bandcamp.com/track/bounty',
+                            'datasets': ["MUSDB18", "MedleyDB"]
+                        },
+                    ],
+                },
+            };
 
-    let currentArtistIndex = 0;
-    let filteredArtists = Object.keys(artistsData);
-
-
-    function populateFilters() {
-        const datasets = new Set();
-        for (const artistName in artistsData) {
-            artistsData[artistName].tracks.forEach(track => {
-                if (track.datasets) {
-                    track.datasets.forEach(dataset => datasets.add(dataset.trim()));
-                }
+            let currentArtistIndex = 0;
+            let filteredArtists = Object.keys(artistsData);
+            console.log("Initial values:", {
+                currentArtistIndex,
+                filteredArtists
             });
-        }
-
-        // Clear existing options before adding new ones
-        datasetFilter.innerHTML = '<option value="">All</option>';
-
-        datasets.forEach(dataset => {
-            const option = document.createElement('option');
-            option.value = dataset;
-            option.textContent = dataset;
-            datasetFilter.appendChild(option);
-        });
-        //Add default options
-        if (!datasetFilter.querySelector('option[value="MUSDB18"]')) {
-            const option = document.createElement('option');
-            option.value = "MUSDB18";
-            option.textContent = "MUSDB18";
-            datasetFilter.appendChild(option);
-        }
-        if (!datasetFilter.querySelector('option[value="MedleyDB"]')) {
-            const option = document.createElement('option');
-            option.value = "MedleyDB";
-            option.textContent = "MedleyDB";
-            datasetFilter.appendChild(option);
-        }
-    }
-
-    function populateSidebar() {
-        sidebarArtistsList.innerHTML = ''; // Clear the sidebar
-        for (const artistName in artistsData) {
-            const hasPurchaseableTrack = artistsData[artistName].tracks.some(
-                (track) =>
-                track.purchaseable === 'track_true' ||
-                track.purchaseable === 'album_true'
-            );
-            if (!hasPurchaseableTrack) {
-                const li = document.createElement('li');
-                li.textContent = artistsData[artistName].artist.display_name;
-                 li.dataset.artistName = artistName; // Store artist name
-                li.addEventListener('click', () => {
-                    // Fetch and display data for the selected artist
-                    displayArtist(artistName);
-                });
-                sidebarArtistsList.appendChild(li);
-            }
-        }
-    }
-
-  async function displayArtist(artistName) {
-      const artistData = artistsData[artistName];
-      populateFilters(artistData);
-      filteredArtists = [artistName];
-      currentArtistIndex = 0;
-      await displayCurrentArtistFrame(artistData); // Pass artistData to displayCurrentArtistFrame
-  }
-
-    async function displayCurrentArtistFrame(artistData) { // Add artistData as a parameter
-        artistFrameContainer.innerHTML = '';
-        if (filteredArtists.length === 0) {
-            artistFrameContainer.textContent = 'No artists match the current filters.';
-            return;
-        }
-
-        const currentArtistName = filteredArtists[currentArtistIndex];
-        //const artistData = artistsData[currentArtistName];  // No longer needs to be declared here
-
-        const artistDiv = document.createElement('div');
-        artistDiv.innerHTML = `<h2>${artistData.artist.display_name}</h2>`;
-
-        // Track list
-        const trackListUl = document.createElement('ul');
-        trackListUl.classList.add('track-list');
-        for (const track of artistData.tracks) {
-            const trackLi = document.createElement('li');
-            trackLi.classList.add('track-item');
-
-            const trackNameSpan = document.createElement('span');
-            trackNameSpan.textContent = track.track_name;
-            if (track.track_link) {
-                try {
-                    // Fetch the track page to get album information.
-                    const response = await fetch(track.track_link);
-                    console.log("Response:", response); // Log the response
-                    if (!response.ok) {
-                        throw new Error(`Failed to fetch track info: ${response.status}`);
+            // Store parsed track info
+            let trackInfoCache = {};
+            const PAGE_DATA = {
+                "track_id": 467962886,
+                "album_id": 2659722873,
+            };
+            const SCRIPT_DATA = {
+                "@type": "MusicRecording",
+                "@id": "https://stevenaclark.bandcamp.com/track/bounty",
+                "additionalProperty": [
+                    {
+                        "@type": "PropertyValue",
+                        "name": "track_id",
+                        "value": 467962886
+                    },
+                    {
+                        "@type": "PropertyValue",
+                        "name": "art_id",
+                        "value": 1496606706
+                    },
+                    {
+                        "@type": "PropertyValue",
+                        "name": "license_name",
+                        "value": "all_rights_reserved"
+                    },
+                    {
+                        "@type": "PropertyValue",
+                        "name": "tracknum",
+                        "value": 5
                     }
-                    const text = await response.text();
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(text, 'text/html');
+                ],
+                "name": "Bounty",
+                "isrcCode": "US38W1530105",
+                "duration": "P00H04M48S",
+                "dateModified": "29 Sep 2015 21:04:46 GMT",
+                "datePublished": "18 Sep 2015 00:00:00 GMT",
+                "inAlbum": {
+                    "@type": "MusicAlbum",
+                    "name": "The Lonely Roller",
+                    "albumRelease": [
+                        {
+                            "@type": "MusicRelease",
+                            "@id": "https://stevenaclark.bandcamp.com/album/the-lonely-roller",
+                            "additionalProperty": [
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "item_type",
+                                    "value": "a"
+                                }
+                            ]
+                        },
+                        {
+                            "@type": [
+                                "MusicRelease",
+                                "Product"
+                            ],
+                            "@id": "https://stevenaclark.bandcamp.com/track/bounty",
+                            "name": "Bounty",
+                            "additionalProperty": [
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "item_id",
+                                    "value": 467962886
+                                },
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "item_type",
+                                    "value": "t"
+                                },
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "selling_band_id",
+                                    "value": 82205601
+                                },
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "type_name",
+                                    "value": "Digital"
+                                },
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "art_id",
+                                    "value": 1496606706
+                                }
+                            ],
+                            "description": "Includes high-quality download in MP3, FLAC and more. Paying supporters also get unlimited streaming via the free Bandcamp app.",
+                            "offers": {
+                                "@type": "Offer",
+                                "url": "https://stevenaclark.bandcamp.com/track/bounty#t467962886-buy",
+                                "priceCurrency": "USD",
+                                "price": 1.0,
+                                "priceSpecification": {
+                                    "minPrice": 1.0
+                                },
+                                "availability": "OnlineOnly"
+                            },
+                            "musicReleaseFormat": "DigitalFormat",
+                            "image": [
+                                "https://f4.bcbits.com/img/a1496606706_10.jpg"
+                            ],
+                            "recordLabel": {
+                                "@type": "MusicGroup",
+                                "name": "Secretly Canadian",
+                                "@id": "https://secretlycanadian.bandcamp.com",
+                                "additionalProperty": [
+                                    {
+                                        "@type": "PropertyValue",
+                                        "name": "url_suffix",
+                                        "value": "?from=btl"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "@type": [
+                                "MusicRelease",
+                                "Product"
+                            ],
+                            "@id": "https://stevenaclark.bandcamp.com/track/bounty#p4193603995",
+                            "name": "The Lonely Roller / Blue Vinyl LP",
+                            "additionalProperty": [
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "item_id",
+                                    "value": 4193603995
+                                },
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "item_type",
+                                    "value": "p"
+                                },
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "selling_band_id",
+                                    "value": 82205601
+                                },
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "type_name",
+                                    "value": "Vinyl LP"
+                                },
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "image_ids",
+                                    "value": [
+                                        35222532
+                                    ]
+                                },
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "is_music_merch",
+                                    "value": true
+                                },
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "type_id",
+                                    "value": 2
+                                }
+                            ],
+                            "offers": {
+                                "@type": "Offer",
+                                "url": "https://stevenaclark.bandcamp.com/track/bounty#p4193603995-buy",
+                                "priceCurrency": "USD",
+                                "price": 25.99,
+                                "priceSpecification": {
+                                    "minPrice": 25.99
+                                },
+                                "availability": "InStock",
+                                "additionalProperty": [
+                                    {
+                                        "@type": "PropertyValue",
+                                        "name": "includes_digital_download",
+                                        "value": true
+                                    }
+                                ]
+                            },
+                            "musicReleaseFormat": "VinylFormat",
+                            "image": [
+                                "https://f4.bcbits.com/img/0035222532_10.jpg"
+                            ]
+                        },
+                        {
+                            "@type": [
+                                "MusicRelease",
+                                "Product"
+                            ],
+                            "@id": "https://stevenaclark.bandcamp.com/track/bounty#p2876290430",
+                            "name": "The Lonely Roller / CD",
+                            "additionalProperty": [
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "item_id",
+                                    "value": 2876290430
+                                },
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "item_type",
+                                    "value": "p"
+                                },
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "selling_band_id",
+                                    "value": 82205601
+                                },
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "type_name",
+                                    "value": "Compact Disc (CD)"
+                                },
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "image_ids",
+                                    "value": [
+                                        35222544
+                                    ]
+                                },
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "is_music_merch",
+                                    "value": true
+                                },
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "type_id",
+                                    "value": 1
+                                }
+                            ],
+                            "offers": {
+                                "@type": "Offer",
+                                "url": "https://stevenaclark.bandcamp.com/track/bounty#p2876290430-buy",
+                                "priceCurrency": "USD",
+                                "price": 12.99,
+                                "priceSpecification": {
+                                    "minPrice": 12.99
+                                },
+                                "availability": "InStock",
+                                "additionalProperty": [
+                                    {
+                                        "@type": "PropertyValue",
+                                        "name": "includes_digital_download",
+                                        "value": true
+                                    }
+                                ]
+                            },
+                            "musicReleaseFormat": "CDFormat",
+                            "image": [
+                                "https://f4.bcbits.com/img/0035222544_10.jpg"
+                            ]
+                        }
+                    ],
+                    "albumReleaseType": "SingleRelease",
+                    "@id": "https://stevenaclark.bandcamp.com/album/the-lonely-roller",
+                    "additionalProperty": [
+                        {
+                            "@type": "PropertyValue",
+                            "name": "download_pref",
+                            "value": 2
+                        }
+                    ]
+                },
+                "byArtist": {
+                    "@type": "MusicGroup",
+                    "name": "Steven A. Clark",
+                    "@id": "https://stevenaclark.bandcamp.com"
+                },
+                "publisher": {
+                    "@type": "MusicGroup",
+                    "@id": "https://stevenaclark.bandcamp.com",
+                    "name": "Steven A. Clark",
+                    "additionalProperty": [
+                        {
+                            "@type": "PropertyValue",
+                            "name": "band_id",
+                            "value": 1370164503
+                        },
+                        {
+                            "@type": "PropertyValue",
+                            "name": "has_any_downloads",
+                            "value": true
+                        },
+                        {
+                            "@type": "PropertyValue",
+                            "name": "has_download_codes",
+                            "value": true
+                        },
+                        {
+                            "@type": "PropertyValue",
+                            "name": "image_height",
+                            "value": 452
+                        },
+                        {
+                            "@type": "PropertyValue",
+                            "name": "image_id",
+                            "value": 13720387
+                        },
+                        {
+                            "@type": "PropertyValue",
+                            "name": "image_width",
+                            "value": 900
+                        }
+                    ],
+                    "image": "https://f4.bcbits.com/img/0013720387_10.jpg",
+                    "genre": "https://bandcamp.com/discover/alternative",
+                    "description": "Whether it’s someone searching or someone who doesn’t want to be found, we can’t help but be drawn to the drifters. Steven A. Clark is that next stranger to roll into town, a restless artist recasting R&B. He’s a straight-talker in a genre filled with wish-fulfillment, whimsyand cliched beats; think the Outlaw Josey Wales raised on N.E.R.D. and 808 & Heartbreak.",
+                    "mainEntityOfPage": [
+                        {
+                            "@type": "WebPage",
+                            "url": "https://twitter.com/stevenAclark",
+                            "name": "Twitter"
+                        },
+                        {
+                            "@type": "WebPage",
+                            "url": "https://www.facebook.com/StevenAClarkMusic",
+                            "name": "Facebook"
+                        },
+                        {
+                            "@type": "WebPage",
+                            "url": "http://www.stevenaclark.com/",
+                            "name": "stevenaclark.com"
+                        }
+                    ],
+                    "subjectOf": [
+                        {
+                            "@type": "WebPage",
+                            "url": "https://stevenaclark.bandcamp.com/music",
+                            "name": "music",
+                            "additionalProperty": [
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "nav_type",
+                                    "value": "m"
+                                }
+                            ]
+                        },
+                        {
+                            "@type": "WebPage",
+                            "url": "https://stevenaclark.bandcamp.com/merch",
+                            "name": "merch",
+                            "additionalProperty": [
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "nav_type",
+                                    "value": "p"
+                                }
+                            ]
+                        },
+                        {
+                            "@type": "WebPage",
+                            "url": "https://stevenaclark.bandcamp.com/community",
+                            "name": "community",
+                            "additionalProperty": [
+                                {
+                                    "@type": "PropertyValue",
+                                    "name": "nav_type",
+                                    "value": "c"
+                                }
+                            ]
+                        }
+                    ],
+                    "foundingLocation": {
+                        "@type": "Place",
+                        "name": "Miami, Florida"
+                    }
+                },
+                "copyrightNotice": "All Rights Reserved",
+                "keywords": [
+                    "Alternative",
+                    "R&B",
+                    "Soul",
+                    "experimental r&b",
+                    "Miami"
+                ],
+                "image": "https://f4.bcbits.com/img/a1496606706_10.jpg",
+                "sponsor": [
+                    {
+                        "@type": "Person",
+                        "url": "https://bandcamp.com/kwatcharasupat",
+                        "image": "https://f4.bcbits.com/img/0039108449_50.jpg",
+                        "additionalProperty": [
+                            {
+                                "@type": "PropertyValue",
+                                "name": "image_id",
+                                "value": 39108449
+                            }
+                        ],
+                        "name": "kwatcharasupat"
+                    }
+                ],
+                "mainEntityOfPage": "https://stevenaclark.bandcamp.com/track/bounty",
+                "@context": "https://schema.org"
+            };
 
-                    // Album information
-                    const albumElement = doc.querySelector("#name-section > h3");
-                    const albumNameElement = doc.querySelector("#name-section > h3 > span:nth-child(1) > a > span");
-                    const albumLinkElement = doc.querySelector("#name-section > h3 > span:nth-child(1) > a");
-                    const pageDataElement = doc.querySelector("#pagedata");
+
+            function populateFilters() {
+                console.log("populateFilters called");
+                const datasets = new Set();
+                for (const artistName in artistsData) {
+                    artistsData[artistName].tracks.forEach(track => {
+                        if (track.datasets) {
+                            track.datasets.forEach(dataset => datasets.add(dataset.trim()));
+                        }
+                    });
+                }
+
+                // Clear existing options before adding new ones
+                datasetFilter.innerHTML = '<option value="">All</option>';
+
+                datasets.forEach(dataset => {
+                    const option = document.createElement('option');
+                    option.value = dataset;
+                    option.textContent = dataset;
+                    datasetFilter.appendChild(option);
+                });
+                //Add default options
+                if (!datasetFilter.querySelector('option[value="MUSDB18"]')) {
+                    const option = document.createElement('option');
+                    option.value = "MUSDB18";
+                    option.textContent = "MUSDB18";
+                    datasetFilter.appendChild(option);
+                }
+                if (!datasetFilter.querySelector('option[value="MedleyDB"]')) {
+                    const option = document.createElement('option');
+                    option.value = "MedleyDB";
+                    option.textContent = "MedleyDB";
+                    datasetFilter.appendChild(option);
+                }
+                console.log("Filters populated");
+            }
 
 
-                    let albumName = albumNameElement ? albumNameElement.textContent : 'Unknown Album';
-                    let albumLink = albumLinkElement ? albumLinkElement.href : '#';
-                    let albumId = pageDataElement ? pageDataElement.dataset.embed : 'Unknown ID';
+
+            async function displayArtist(artistName) {
+                console.log(`displayArtist called with artistName: ${artistName}`);
+                const artistData = artistsData[artistName];
+                populateFilters(artistData);
+                filteredArtists = [artistName];
+                currentArtistIndex = 0;
+                await displayCurrentArtistFrame(artistData); // Pass artistData to displayCurrentArtistFrame
+                console.log(`displayArtist finished for ${artistName}`);
+            }
+
+            async function displayCurrentArtistFrame(artistData) { // Add artistData as a parameter
+                console.log("displayCurrentArtistFrame called");
+                artistFrameContainer.innerHTML = '';
+                iframeContainer.innerHTML = '';
+                tracklistContainer.innerHTML = '';
+                if (filteredArtists.length === 0) {
+                    artistFrameContainer.textContent = 'No artists match the current filters.';
+                    console.log("No artists match filters");
+                    return;
+                }
+
+                const currentArtistName = filteredArtists[currentArtistIndex];
+                //const artistData = artistsData[currentArtistName];  // No longer needs to be declared here
+
+                const artistDiv = document.createElement('div');
+                artistDiv.innerHTML = `<h2>${artistData.artist.display_name}</h2>`;
+                artistFrameContainer.appendChild(artistDiv);
 
 
-                    // Purchase information.
-                    const buyItem = doc.querySelector("#trackInfoInner > ul > li.buyItem.digital");
-                    const isPurchaseable = !!buyItem;
-                    let purchasePrice = isPurchaseable ? buyItem.querySelector('.title').textContent: "N/A";
+                // Track list
+                const trackListUl = document.createElement('ul');
+                trackListUl.classList.add('track-list');
+                let randomTrack = null;
+                let iframeHtml = ''; // Initialize iframeHtml
+                let selectedAlbum = null; // To store album info for iframe
+
+                if (artistData.tracks && artistData.tracks.length > 0) {
+                    randomTrack = artistData.tracks[Math.floor(Math.random() * artistData.tracks.length)]
+                }
 
 
-                    const albumInfoDiv = document.createElement('div');
-                    albumInfoDiv.innerHTML = `<p>Album: <a href="${albumLink}">${albumName}</a> (ID: ${albumId})</p>`;
-                    trackLi.appendChild(albumInfoDiv);
+
+                for (const track of artistData.tracks) {
+                    const trackLi = document.createElement('li');
+                    trackLi.classList.add('track-item');
+
+                    const trackNameSpan = document.createElement('span');
                     trackNameSpan.innerHTML = `<a href="${track.track_link}">${track.track_name}</a>`;
 
-                    if(isPurchaseable){
-                         const purchaseInfoDiv = document.createElement('div');
-                         purchaseInfoDiv.textContent = `Price: ${purchasePrice}`;
-                         trackLi.appendChild(purchaseInfoDiv);
+                    let purchasePrice = "N/A";
+                    let priceCurrency = "";
+                    let isPurchaseable = false;
+
+                    if (SCRIPT_DATA?.inAlbum?.albumRelease) {
+                        if (Array.isArray(SCRIPT_DATA.inAlbum.albumRelease)) {
+                            for (const release of SCRIPT_DATA.inAlbum.albumRelease) {
+                                if (release.name === SCRIPT_DATA.name && release.offers) {
+                                    isPurchaseable = true;
+                                    purchasePrice = release.offers.price;
+                                    priceCurrency = release.offers.priceCurrency;
+                                    break;
+                                }
+                            }
+                        } else if (SCRIPT_DATA.inAlbum.albumRelease.name === SCRIPT_DATA.name && SCRIPT_DATA.inAlbum.albumRelease.offers) {
+                            isPurchaseable = true;
+                            purchasePrice = SCRIPT_DATA.inAlbum.albumRelease.offers.price;
+                            priceCurrency = SCRIPT_DATA.inAlbum.albumRelease.priceCurrency;
+                        }
                     }
-                    // Embed iframe
-                    const randomAlbum = artistData.albums[Math.floor(Math.random() * artistData.albums.length)];
-                    if (randomAlbum && randomAlbum.bandcamp_album_id) {
-                        const iframeWidth = 300;
-                        const iframeHeight = 300;
+
+                    if (isPurchaseable) {
+                        const priceSpan = document.createElement('div');
+                        priceSpan.textContent = `Purchase available from: ${priceCurrency} ${purchasePrice}`;
+                        trackNameSpan.appendChild(priceSpan);
+                    }
+
+                    trackLi.appendChild(trackNameSpan);
+
+                    if (track.datasets && track.datasets.length > 0) {
+                        const datasetsDiv = document.createElement('div');
+                        datasetsDiv.classList.add('track-datasets');
+                        track.datasets.forEach(dataset => {
+                            const datasetSpan = document.createElement('span');
+                            datasetSpan.classList.add('dataset-tag');  // Apply the CSS class
+                            datasetSpan.textContent = dataset;
+                            datasetsDiv.appendChild(datasetSpan);
+                        });
+                        trackLi.appendChild(datasetsDiv);
+                    }
+
+                    trackListUl.appendChild(trackLi);
+                }
+                tracklistContainer.appendChild(trackListUl);
+
+
+                // Embed iframe after track list is populated
+                if (PAGE_DATA && PAGE_DATA.album_id) {
+                    const albumId = PAGE_DATA.album_id;
+                    const subdomain = artistData.artist.bandcamp_subdomain;
+                    const albumName = SCRIPT_DATA.inAlbum.name;
+                    console.log("Parsed Album ID:", albumId);
+
+                    if (albumId) {
+                        const iframeWidth = '100%';
+                        const iframeHeight = '768px';
                         const iframe = document.createElement('iframe');
                         iframe.style.border = '0';
-                        iframe.style.width = `${iframeWidth}px`;
-                        iframe.style.height = `${iframeHeight}px`;
-                        iframe.src = `https://bandcamp.com/EmbeddedPlayer/album=${randomAlbum.bandcamp_album_id}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/`;
+                        iframe.style.width = `${iframeWidth}`;
+                        iframe.style.height = `${iframeHeight}`;
+                        iframe.src = `https://bandcamp.com/EmbeddedPlayer/album=${albumId}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/`;
                         iframe.seamless = true;
+                        iframe.transparent = true;
+                        iframe.tracklist = true;
 
                         // Check if the iframe loads correctly
                         iframe.onload = () => {};
                         iframe.onerror = () => {
-                            throw new Error("Failed to load iframe");
+                            console.error("Failed to load iframe");
                         };
 
                         const bandcampLink = document.createElement('a');
-                        bandcampLink.href = `https://${artistData.artist.bandcamp_subdomain}.bandcamp.com/album/${randomAlbum.albumName.toLowerCase().replace(/ /g, '-')}`;
-                        bandcampLink.textContent = `${randomAlbum.albumName} by ${artistData.artist.display_name}`;
+                        bandcampLink.href = `https://${subdomain}.bandcamp.com/album/${albumName.toLowerCase().replace(/ /g, '-')}`;
+                        bandcampLink.textContent = `${albumName} by ${artistData.artist.display_name}`;
                         iframe.appendChild(bandcampLink);
-                        trackLi.appendChild(iframe); // Append the iframe to trackLi
+                        iframeHtml = iframe.outerHTML; // Store the iframe HTML
+                        iframeContainer.appendChild(iframe); // Append the iframe
+                        console.log("Iframe added");
                     } else {
-                        trackLi.innerHTML += '<p>[Placeholder for other iframes]</p>'; // Append to trackLi
+                        iframeContainer.innerHTML += '<p>[Placeholder for other iframes]</p>';
+                        console.log("Iframe placeholder added");
                     }
 
+                } else {
+                    iframeContainer.innerHTML += '<p>[Placeholder for other iframes]</p>';
+                    console.log("Iframe placeholder added");
+                }
 
-                } catch (error) {
-                    console.error("Error fetching or parsing track data:", error);
-                    trackNameSpan.innerHTML = `<a href="${track.track_link}">${track.track_name}</a>`;
-                    // Display error message to the user
-                    const errorMessage = document.createElement('p');
-                    errorMessage.style.color = 'red';
-                    errorMessage.textContent = "Error: Could not retrieve track information.";
-                    trackLi.appendChild(errorMessage);
+                console.log("Artist frame updated");
+
+
+
+            }
+
+            function filterArtists() {
+                console.log("filterArtists called");
+                console.log("datasetFilter.value:", datasetFilter.value);
+                console.log("purchaseableFilter.value:", purchaseableFilter.value);
+                console.log("purchaseOptionFilter.value:", purchaseOptionFilter.value);
+
+                filteredArtists = Object.keys(artistsData).filter((artistName) => {
+                    const artistData = artistsData[artistName];
+                    console.log("Checking artist:", artistName);
+                    return artistData.tracks.some((track) => {
+                        const datasetMatch =
+                            !datasetFilter.value ||
+                            (track.datasets && track.datasets.includes(datasetFilter.value));
+                        const purchaseableMatch =
+                            !purchaseableFilter.value ||
+                            (purchaseableFilter.value === 'true' &&
+                                (track.purchaseable === 'track_true' ||
+                                    track.purchaseable === 'album_true')) ||
+                            (purchaseableFilter.value === 'false' &&
+                                track.purchaseable !== 'track_true' &&
+                                track.purchaseable !== 'album_true');
+                        const purchaseOptionMatch =
+                            !purchaseOptionFilter.value ||
+                            (purchaseOptionFilter.value === 'bandcamp' && track.bandcamp_album_id);
+                        console.log(
+                            `Track: ${track.track_name}, datasetMatch: ${datasetMatch}, purchaseableMatch: ${purchaseableMatch}, purchaseOptionMatch: ${purchaseOptionMatch}`
+                        );
+                        return datasetMatch && purchaseableMatch && purchaseOptionMatch;
+                    });
+                });
+
+                currentArtistIndex = 0;
+                if (filteredArtists.length > 0) {
+                    displayCurrentArtistFrame(artistsData[filteredArtists[0]]);
+                } else {
+                    artistFrameContainer.innerHTML = "No matching artists found";
+                    iframeContainer.innerHTML = "";
+                    tracklistContainer.innerHTML = "";
+                }
+
+                console.log("Filtered artists:", filteredArtists);
+            }
+
+
+            function randomizeArtist() {
+                if (Object.keys(artistsData).length > 0) {
+                    const artistKeys = Object.keys(artistsData);
+                    const randomIndex = Math.floor(Math.random() * artistKeys.length);
+                    const randomArtistName = artistKeys[randomIndex];
+                    currentArtistIndex = randomIndex;
+                    filteredArtists = [randomArtistName]; //update filter
+                    displayCurrentArtistFrame(artistsData[randomArtistName]);
                 }
             }
-            trackLi.appendChild(trackNameSpan);
 
-            if (track.datasets && track.datasets.length > 0) {
-                const datasetsSpan = document.createElement('span');
-                datasetsSpan.textContent = ` (${track.datasets.join(', ')})`;
-                trackLi.appendChild(datasetsSpan);
-            }
-
-            trackListUl.appendChild(trackLi);
-        }
-        artistDiv.appendChild(trackListUl);
-        artistFrameContainer.appendChild(artistDiv);
-    }
-
-    function filterArtists() {
-        console.log("filterArtists called");
-        console.log("datasetFilter.value:", datasetFilter.value);
-        console.log("purchaseableFilter.value:", purchaseableFilter.value);
-        console.log("purchaseOptionFilter.value:", purchaseOptionFilter.value);
-
-        filteredArtists = Object.keys(artistsData).filter((artistName) => {
-            const artistData = artistsData[artistName];
-            console.log("Checking artist:", artistName);
-            return artistData.tracks.some((track) => {
-                const datasetMatch =
-                !datasetFilter.value ||
-                (track.datasets && track.datasets.includes(datasetFilter.value));
-                const purchaseableMatch =
-                !purchaseableFilter.value ||
-                (purchaseableFilter.value === 'true' &&
-                    (track.purchaseable === 'track_true' ||
-                    track.purchaseable === 'album_true')) ||
-                (purchaseableFilter.value === 'false' &&
-                    track.purchaseable !== 'track_true' &&
-                    track.purchaseable !== 'album_true');
-                const purchaseOptionMatch =
-                !purchaseOptionFilter.value ||
-                (purchaseOptionFilter.value === 'bandcamp' && track.bandcamp_album_id);
-                console.log(
-                `Track: ${track.track_name}, datasetMatch: ${datasetMatch}, purchaseableMatch: ${purchaseableMatch}, purchaseOptionMatch: ${purchaseOptionMatch}`
-                );
-                return datasetMatch && purchaseableMatch && purchaseOptionMatch;
+            // Event Listeners
+            datasetFilter.addEventListener('change', filterArtists);
+            purchaseableFilter.addEventListener('change', filterArtists);
+            purchaseOptionFilter.addEventListener('change', filterArtists);
+            randomizeButton.addEventListener('click', randomizeArtist);
+            prevArtistButton.addEventListener('click', () => {
+                if (filteredArtists.length > 0) {
+                    currentArtistIndex = (currentArtistIndex - 1 + filteredArtists.length) % filteredArtists.length;
+                    displayCurrentArtistFrame(artistsData[filteredArtists[currentArtistIndex]]);
+                }
             });
+
+            nextArtistButton.addEventListener('click', () => {
+                if (filteredArtists.length > 0) {
+                    currentArtistIndex = (currentArtistIndex + 1) % filteredArtists.length;
+                    displayCurrentArtistFrame(artistsData[filteredArtists[currentArtistIndex]]);
+                }
+            });
+
+            // Initial population
+            populateFilters();
+
+            if (Object.keys(artistsData).length > 0)
+                displayCurrentArtistFrame(artistsData[Object.keys(artistsData)[0]]); //show first artist
+            else {
+                artistFrameContainer.innerHTML = "No artists available";
+            }
         });
-        currentArtistIndex = 0;
-        if (filteredArtists.length > 0) {
-            displayCurrentArtistFrame(artistsData[filteredArtists[currentArtistIndex]]);
-        } else {
-            artistFrameContainer.innerHTML = "No artists match the current filter";
-        }
-    }
+    </script>
+</body>
 
+</html>
 
-    datasetFilter.addEventListener('change', filterArtists);
-    purchaseableFilter.addEventListener('change', filterArtists);
-    purchaseOptionFilter.addEventListener('change', filterArtists);
-
-    randomizeButton.addEventListener('click', () => {
-        if (filteredArtists.length > 0) {
-            currentArtistIndex = Math.floor(Math.random() * filteredArtists.length);
-            displayCurrentArtistFrame(artistsData[filteredArtists[currentArtistIndex]]);
-        }
-    });
-
-    prevArtistButton.addEventListener('click', () => {
-        if (filteredArtists.length > 0) {
-            currentArtistIndex = (currentArtistIndex - 1 + filteredArtists.length) % filteredArtists.length;
-            displayCurrentArtistFrame(artistsData[filteredArtists[currentArtistIndex]]);
-        }
-    });
-
-    nextArtistButton.addEventListener('click', () => {
-        if (filteredArtists.length > 0) {
-            currentArtistIndex = (currentArtistIndex + 1) % filteredArtists.length;
-             displayCurrentArtistFrame(artistsData[filteredArtists[currentArtistIndex]]);
-        }
-    });
-
-    // Initial setup:  Load default data
-    function initialize() {
-        populateSidebar();
-        populateFilters();
-        displayArtist('stevenaclark'); //show the first artist
-    }
-
-  initialize();
-});
-</script>
