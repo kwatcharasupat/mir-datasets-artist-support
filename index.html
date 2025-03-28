@@ -705,7 +705,6 @@
                         bandcampLink.href = `https://${subdomain}.bandcamp.com/album/${albumName.toLowerCase().replace(/ /g, '-')}`;
                         bandcampLink.textContent = `${albumName} by ${artistData.artist.display_name}`;
                         iframe.appendChild(bandcampLink);
-                        iframeHtml = iframe.outerHTML; // Store the iframe HTML
                         iframeContainer.appendChild(iframe); // Append the iframe
                         console.log("Iframe added");
                     } else {
